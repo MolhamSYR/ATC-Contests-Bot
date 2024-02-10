@@ -38,7 +38,7 @@ function diff_hours(dt2, dt1)
   
  }
 
-async function getCodeforces(chatid, threadid, maxtime, ctx) {
+async function getCodeforces(chatid, threadid, maxtime) {
 
     const response = await fetch("https://codeforces.com/api/contest.list?gym=false");
     const data = await response.json();
@@ -91,14 +91,11 @@ async function getCodeforces(chatid, threadid, maxtime, ctx) {
         message += tmp + '\n';
     }
 
-    ctx.reply(message, {
-        "parse_mode": "HTML",
-    });
-
+    return message;
 
 }
 
-async function getContests(chatid, name, api, threadid, maxtime, bot) {
+async function getContests(chatid, name, api, threadid, maxtime) {
 
     const response = await fetch(api);
     const data = await response.json();
@@ -135,9 +132,7 @@ async function getContests(chatid, name, api, threadid, maxtime, bot) {
         message += msg + '\n';
     }
 
-    ctx.reply(message, {
-        "parse_mode": "HTML",
-    });
+    return message;
 
 }
 
