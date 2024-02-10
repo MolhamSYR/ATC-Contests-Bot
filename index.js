@@ -42,21 +42,21 @@ bot.command("contests", async (ctx) => {
 
     const topic = ctx.message.is_topic_message ? ctx.message.message_id : undefined;
     if(platform == "codeforces") {
-        const tosend = await contests.getCodeforces(msg.chat.id, topic, MAX_DAYS, ctx);
+        const tosend = await contests.getCodeforces(msg.chat.id, topic,7, ctx);
         await ctx.reply(tosend, {
             parse_mode: "HTML"
         });
     }
 
     else if(platform == "codechef") {
-        const tosend = contests.getContests(msg.chat.id, "Codechef", codechef, topic, MAX_DAYS, ctx);
+        const tosend = contests.getContests(msg.chat.id, "Codechef", codechef, topic, 7, ctx);
         await ctx.reply(tosend, {
             parse_mode: "HTML"
         });
     }
 
     else if(platform == "usaco") {
-        const tosend = contests.getContests(msg.chat.id, "USACO", usaco, topic, MAX_DAYS, ctx);
+        const tosend = contests.getContests(msg.chat.id, "USACO", usaco, topic, 7, ctx);
         await ctx.reply(tosend, {
             parse_mode: "HTML"
         });
