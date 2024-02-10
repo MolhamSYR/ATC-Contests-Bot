@@ -4,7 +4,12 @@ var atcoder = "https://clist.by/api/v4/contest/?username=RuntimeError0&api_key=f
 var codeforces = "https://clist.by/api/v4/contest/?username=RuntimeError0&api_key=f11119d090d20aecdb2835c60d564587b92ac06a&resource_id=1&upcoming=true&format=json";
 
 const ALL_NAMES = ["Codeforces" , "AtCoder", "Codechef", "USACO"];
-const ALL_PLATFORMS = new Map([ ["Codechef",codechef], ["Codeforces",codeforces],["AtCoder", atcoder], ["USACO",usaco]]);
+var ALL_PLATFORMS = new Map();
+
+ALL_PLATFORMS.set("Codeforces", codeforces);
+ALL_PLATFORMS.set("AtCoder", atcoder);
+ALL_PLATFORMS.set("Codechef", codechef);
+ALL_PLATFORMS.set("USACO", usaco);
 
 async function getAllContests(chatid, threadid, maxtime) {
 
@@ -13,7 +18,7 @@ async function getAllContests(chatid, threadid, maxtime) {
     for(platname of ALL_NAMES) {
 
         message += "<b> <i>" + platname + " Upcoming Contests: </i> </b>\n\n"
-        const api = ALL_PLATFORMS[platname];
+        const api = ALL_PLATFORMS.get(platname);
 
         const response = await fetch(api);
         const data = await response.json();
