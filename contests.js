@@ -1,6 +1,4 @@
 
-const bot = require('./index');
-
 var usaco = "https://clist.by/api/v4/contest/?username=RuntimeError0&api_key=f11119d090d20aecdb2835c60d564587b92ac06a&resource_id=25&upcoming=true&format=json";
 var codechef = "https://clist.by/api/v4/contest/?username=RuntimeError0&api_key=f11119d090d20aecdb2835c60d564587b92ac06a&resource_id=2&upcoming=true&format=json";
 
@@ -44,7 +42,7 @@ function diff_hours(dt2, dt1)
   
  }
 
-async function getCodeforces(chatid, threadid, maxtime) {
+async function getCodeforces(chatid, threadid, maxtime, bot) {
 
     const response = await fetch("https://codeforces.com/api/contest.list?gym=false");
     const data = await response.json();
@@ -103,7 +101,7 @@ async function getCodeforces(chatid, threadid, maxtime) {
 
 }
 
-async function getContests(chatid, name, api, threadid, maxtime) {
+async function getContests(chatid, name, api, threadid, maxtime, bot) {
 
     const response = await fetch(api);
     const data = await response.json();

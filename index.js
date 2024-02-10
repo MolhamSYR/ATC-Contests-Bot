@@ -34,18 +34,21 @@ bot.command('setmainchannel', async (ctx) => {
 
 bot.command("contests", async (ctx) => {
     const msg = ctx.message;
-    const platform = ctx.match;
+    const txt = msg.text;
+    const platform = txt.substring(txt.indexOf(" ") + 1);
+
+
     const topic = ctx.message.is_topic_message ? ctx.message.message_id : undefined;
     if(platform == "codeforces") {
-        contests.getCodeforces(msg.chat.id, topic, MAX_DAYS);
+        contests.getCodeforces(msg.chat.id, topic, MAX_DAYS, bot);
     }
 
     else if(platform == "codechef") {
-        contests.getContests(msg.chat.id, "Codechef", codechef, topic, MAX_DAYS);
+        contests.getContests(msg.chat.id, "Codechef", codechef, topic, MAX_DAYS, bot);
     }
 
     else if(platform == "usaco") {
-        contests.getContests(msg.chat.id, "USACO", usaco, topic, MAX_DAYS);
+        contests.getContests(msg.chat.id, "USACO", usaco, topic, MAX_DAYS, bot);
     }
 
     else {
