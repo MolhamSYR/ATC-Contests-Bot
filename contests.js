@@ -46,6 +46,8 @@ async function getCodeforces(chatid, threadid, maxtime, ctx) {
     const response = await fetch("https://codeforces.com/api/contest.list?gym=false");
     const data = await response.json();
 
+    console.log("GOT CODEFORCES DATA, IT'S HUGE: ");
+    console.log(response);
     let message = "<b> <i> Codeforces Upcoming Contests: </i> </b>\n\n";
 
     let preMsg = [];
