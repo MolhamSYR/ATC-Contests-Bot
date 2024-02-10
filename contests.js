@@ -99,7 +99,8 @@ async function getContests(chatid, name, api, threadid, maxtime) {
 
     const response = await fetch(api);
     const data = await response.json();
-
+    console.log("GOT SOME HUGE DATA FROM " + name);
+    console.log(data.objects);
     let message = "<b> <i>" + name + " Upcoming Contests: </i> </b>\n\n";
 
     for(var contest of data.objects) {

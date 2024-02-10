@@ -10,12 +10,6 @@ var MAIN_CHANNEL = process.env.MAIN_CHANNEL;
 var MAIN_THREAD = process.env.MAIN_THREAD;
 const MAX_DAYS = 5;
 
-var day = contests.getDayNow();
-
-setTimeout(() => {
-    contests.updateContestsDaily(day-1, MAIN_CHANNEL, MAIN_THREAD, bot);
-}, 5000);
-
 bot.command('start', async (ctx) => {
     await ctx.reply("Hello! Welcome to Aleppo Teenagers Competitors' Bot!");
 });
