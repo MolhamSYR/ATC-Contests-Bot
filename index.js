@@ -33,10 +33,17 @@ bot.command("contests", async (ctx) => {
     var usaco = "https://clist.by/api/v4/contest/?username=RuntimeError0&api_key=f11119d090d20aecdb2835c60d564587b92ac06a&resource_id=25&upcoming=true&format=json";
     var codechef = "https://clist.by/api/v4/contest/?username=RuntimeError0&api_key=f11119d090d20aecdb2835c60d564587b92ac06a&resource_id=2&upcoming=true&format=json";
     var atcoder = "https://clist.by/api/v4/contest/?username=RuntimeError0&api_key=f11119d090d20aecdb2835c60d564587b92ac06a&resource_id=93&upcoming=true&format=json";
-
+    var codeforces = "https://clist.by/api/v4/contest/?username=RuntimeError0&api_key=f11119d090d20aecdb2835c60d564587b92ac06a&resource_id=1&upcoming=true&format=json";
     const topic = ctx.message.is_topic_message ? ctx.message.message_id : undefined;
     if(platform == "codeforces") {
-        const tosend = await contests.getCodeforces(msg.chat.id, topic,7);
+        const tosend = await contests.getContests(msg.chat.id, "Codeforces", codeforces ,topic,7);
+        await ctx.reply(tosend, {
+            parse_mode: "HTML"
+        });
+    }
+
+    else if(platform == "") {
+        const tosend = await contests.getAllContests(msg.chat.id, topic,7);
         await ctx.reply(tosend, {
             parse_mode: "HTML"
         });

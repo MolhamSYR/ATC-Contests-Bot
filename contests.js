@@ -1,3 +1,73 @@
+var usaco = "https://clist.by/api/v4/contest/?username=RuntimeError0&api_key=f11119d090d20aecdb2835c60d564587b92ac06a&resource_id=25&upcoming=true&format=json";
+var codechef = "https://clist.by/api/v4/contest/?username=RuntimeError0&api_key=f11119d090d20aecdb2835c60d564587b92ac06a&resource_id=2&upcoming=true&format=json";
+var atcoder = "https://clist.by/api/v4/contest/?username=RuntimeError0&api_key=f11119d090d20aecdb2835c60d564587b92ac06a&resource_id=93&upcoming=true&format=json";
+var codeforces = "https://clist.by/api/v4/contest/?username=RuntimeError0&api_key=f11119d090d20aecdb2835c60d564587b92ac06a&resource_id=1&upcoming=true&format=json";
+
+const ALL_NAMES = ["Codeforces" , "AtCoder", "Codechef", "USACO"];
+const ALL_PLATFORMS = new Map([ ["Codechef",codechef], ["Codeforces",codeforces],["AtCoder", atcoder], ["USACO",usaco]]);
+
+async function getAllContests(chatid, threadid, maxtime) {
+
+    let message = "";
+    let allContests = [];
+    for(platname of ALL_NAMES) {
+
+        message += "<b> <i>" + platname + " Upcoming Contests: </i> </b>\n\n"
+        const api = ALL_PLATFORMS[platname];
+
+        const response = await fetch(api);
+        const data = await response.json();
+        console.log("GOT SOME HUGE DATA FROM " + platname);
+        console.log(data.objects);
+        
+        
+    
+        for(var contest of data.objects) {
+          
+            let msg = "";
+
+            msg += "<b>Name:</b> " + contest.event + '\n';
+
+            var dt = new Date(contest.start);
+            var now = new Date();
+            var dateFormat = new Intl.DateTimeFormat("en-US", {
+                timeZone: "Asia/Damascus",
+                hour: "numeric",
+                minute: "numeric",
+                year: "numeric",
+                day: "numeric",
+                month: "numeric"
+            
+            });
+            var lastdate = dateFormat.format(dt);
+            var start = dt - now;
+            var daydiff = Math.floor(start / (1000 * 60 * 60 * 24));  
+
+            if(daydiff > maxtime || daydiff < 0) continue;
+            msg += "<b>Platform:</b> " + platname + '\n';
+            msg += "<b>Date:</b> " + lastdate + '\n';
+            msg += "<b>Time Left:</b> " +  daydiff + " days left\n";
+
+            var pair = {"key": daydiff, "value": msg};
+            allContests.push(pair);
+        }
+
+        allContests.sort((a,b) => {
+            if(a.key < b.key) return -1;
+            else if(a.key == b.key) return 0;
+            else return 1;
+        })
+
+
+    }
+
+    for(one of allContests) {
+        message += one.value;
+    }
+
+    return message;
+
+}
 
 function updateContestsDaily(prevDay, chatid, threadid, ctx) {
 
@@ -38,63 +108,6 @@ function diff_hours(dt2, dt1)
   
  }
 
-async function getCodeforces(chatid, threadid, maxtime) {
-
-    const response = await fetch("https://codeforces.com/api/contest.list?gym=false");
-    const data = await response.json();
-
-    console.log("GOT CODEFORCES DATA, IT'S HUGE: ");
-    console.log(response);
-    let message = "<b> <i> Codeforces Upcoming Contests: </i> </b>\n\n";
-
-    let preMsg = [];
-    let cnt = 0;
-
-    for(var contest of data.result) {
-
-        let msg = "";
-        if(contest.phase != "BEFORE") continue;
-
-        msg += "<b>Name:</b> " + contest.name + '\n';
-
-        
-        var dt = new Date(contest.startTimeSeconds * 1000);
-        var now = new Date();
-        var dateFormat = new Intl.DateTimeFormat("en-US", {
-                timeZone: "Asia/Damascus",
-                hour: "numeric",
-                minute: "numeric",
-                year: "numeric",
-                day: "numeric",
-                month: "numeric"
-            });
-
-        var lastdate = dateFormat.format(dt);
-
-        var start = dt - now;
-
-        var daydiff = Math.floor(start / (1000 * 60 * 60 * 24)); 
-
-        if(daydiff > maxtime || daydiff < 0) continue;
-         
-
-        msg += "<b>Date:</b> " + lastdate + '\n';
-        msg += "<b>Time Left:</b> " +  daydiff + " days left\n";
-        
-        preMsg[cnt] = msg;
-        cnt = cnt + 1;
-    }
-
-    preMsg.reverse();
-
-    for(let tmp of preMsg) {
-        message += tmp + '\n';
-    }
-
-    return message;
-
-}
-
 async function getContests(chatid, name, api, threadid, maxtime) {
 
     const response = await fetch(api);
@@ -102,9 +115,11 @@ async function getContests(chatid, name, api, threadid, maxtime) {
     console.log("GOT SOME HUGE DATA FROM " + name);
     console.log(data.objects);
     let message = "<b> <i>" + name + " Upcoming Contests: </i> </b>\n\n";
-
+    let allContests = [];
+    
     for(var contest of data.objects) {
-
+        
+        
         let msg = "";
 
         msg += "<b>Name:</b> " + contest.event + '\n';
@@ -125,12 +140,22 @@ async function getContests(chatid, name, api, threadid, maxtime) {
         var daydiff = Math.floor(start / (1000 * 60 * 60 * 24));  
 
         if(daydiff > maxtime || daydiff < 0) continue;
-
+        msg += "<b>Platform:</b> " + name + '\n';
         msg += "<b>Date:</b> " + lastdate + '\n';
         msg += "<b>Time Left:</b> " +  daydiff + " days left\n";
 
+        var pair = {"key": daydiff, "value": msg};
+        allContests.push(pair);
+    }
 
-        message += msg + '\n';
+    allContests.sort((a,b) => {
+        if(a.key < b.key) return -1;
+        else if(a.key == b.key) return 0;
+        else return 1;
+    })
+
+    for(one of allContests) {
+        message += one.value;
     }
 
     return message;
@@ -150,4 +175,4 @@ function getDayNow() {
     return day;
 }
 
-module.exports = {getCodeforces, getContests, updateContestsDaily, getDayNow};
+module.exports = {getAllContests, getContests, updateContestsDaily, getDayNow};
