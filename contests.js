@@ -13,11 +13,10 @@ ALL_PLATFORMS.set("USACO", usaco);
 
 async function getAllContests(chatid, threadid, maxtime) {
 
-    let message = "";
+    let message = "<b> <i>Upcoming Contests in 7 Days</i> </b>\n\n";
     let allContests = [];
     for(platname of ALL_NAMES) {
 
-        message += "<b> <i>" + platname + " Upcoming Contests: </i> </b>\n\n"
         const api = ALL_PLATFORMS.get(platname);
 
         const response = await fetch(api);
@@ -74,7 +73,7 @@ async function getAllContests(chatid, threadid, maxtime) {
 
 }
 
-function updateContestsDaily(prevDay, chatid, threadid, ctx) {
+function updateContestsDaily(prevDay, chatid, threadid, bot) {
 
     if(chatid === -1) {
         console.log("Invalid CHAT ID: " + chatid);
@@ -90,12 +89,9 @@ function updateContestsDaily(prevDay, chatid, threadid, ctx) {
     var day = dateFormat.format(now);
 
     if(day != prevDay) {
-        ctx.reply("<b>Daily Report: </b>\n", {
-            parse_mode: "HTML"
-        })
-        getCodeforces(chatid, threadid, 0, ctx);
-        getContests(chatid, "Codechef", codechef, threadid, 0, ctx);
-        getContests(chatid, "USACO", usaco, threadid, 0, ctx);
+       
+        const toSend = getAllContests(chatid, threadid, 7);
+        
     }
 
     setTimeout(() => {
