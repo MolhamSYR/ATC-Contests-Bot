@@ -62,7 +62,7 @@ async function getAllContests(chatid, threadid, maxtime) {
     }
 
     for(one of allContests) {
-        message += one.value;
+        message += one.value + '\n';
     }
 
     return message;
@@ -155,7 +155,7 @@ async function getContests(chatid, name, api, threadid, maxtime) {
     })
 
     for(one of allContests) {
-        message += one.value;
+        message += one.value + '\n';
     }
 
     return message;
