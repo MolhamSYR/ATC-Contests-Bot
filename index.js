@@ -16,11 +16,11 @@ setTimeout(() => {
     contests.updateContestsDaily(day-1, MAIN_CHANNEL, MAIN_THREAD);
 }, 5000);
 
-bot.command('start', ctx => {
-    ctx.reply("Hello! Welcome to Aleppo Teenagers Competitors' Bot!");
+bot.command('start', async (ctx) => {
+    await ctx.reply("Hello! Welcome to Aleppo Teenagers Competitors' Bot!");
 });
 
-bot.command('setmainchannel', ctx => {
+bot.command('setmainchannel', async (ctx) => {
     process.env['MAIN_CHANNEL'] = ctx.message.chat.id;
 
     if(ctx.message.is_topic_message) {
@@ -32,7 +32,7 @@ bot.command('setmainchannel', ctx => {
 
 });
 
-bot.command("contests", ctx => {
+bot.command("contests", async (ctx) => {
     const msg = ctx.message;
     const platform = ctx.match;
     const topic = ctx.message.is_topic_message ? ctx.message.message_id : undefined;
