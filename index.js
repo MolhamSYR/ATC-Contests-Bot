@@ -43,14 +43,14 @@ bot.command("contests", async (ctx) => {
     }
 
     else if(platform == "codechef") {
-        const tosend = contests.getContests(msg.chat.id, "Codechef", codechef, topic, 7);
+        const tosend = await contests.getContests(msg.chat.id, "Codechef", codechef, topic, 7);
         await ctx.reply(tosend, {
             parse_mode: "HTML"
         });
     }
 
     else if(platform == "usaco") {
-        const tosend = contests.getContests(msg.chat.id, "USACO", usaco, topic, 7);
+        const tosend = await contests.getContests(msg.chat.id, "USACO", usaco, topic, 7);
         await ctx.reply(tosend, {
             parse_mode: "HTML"
         });
