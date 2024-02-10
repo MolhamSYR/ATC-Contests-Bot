@@ -20,7 +20,7 @@ function updateContestsDaily(prevDay, chatid, threadid) {
     var day = dateFormat.format(now);
 
     if(day != prevDay) {
-        bot.sendMessage(chatid, "<b>Daily Report: </b>\n", {
+        bot.api.sendMessage(chatid, "<b>Daily Report: </b>\n", {
             message_thread_id: threadid,
             parse_mode: "HTML"
         })
