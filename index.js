@@ -42,7 +42,7 @@ bot.command("contests", async (ctx) => {
         });
     }
 
-    else if(platform == "") {
+    else if(txt == "/contests") {
         const tosend = await contests.getAllContests(msg.chat.id, topic,7);
         await ctx.reply(tosend, {
             parse_mode: "HTML"
