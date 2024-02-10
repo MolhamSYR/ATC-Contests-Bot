@@ -13,7 +13,7 @@ const MAX_DAYS = 5;
 var day = contests.getDayNow();
 
 setTimeout(() => {
-    contests.updateContestsDaily(day-1, MAIN_CHANNEL, MAIN_THREAD);
+    contests.updateContestsDaily(day-1, MAIN_CHANNEL, MAIN_THREAD, bot);
 }, 5000);
 
 bot.command('start', async (ctx) => {
@@ -40,21 +40,19 @@ bot.command("contests", async (ctx) => {
 
     const topic = ctx.message.is_topic_message ? ctx.message.message_id : undefined;
     if(platform == "codeforces") {
-        contests.getCodeforces(msg.chat.id, topic, MAX_DAYS, bot);
+        contests.getCodeforces(msg.chat.id, topic, MAX_DAYS, ctx);
     }
 
     else if(platform == "codechef") {
-        contests.getContests(msg.chat.id, "Codechef", codechef, topic, MAX_DAYS, bot);
+        contests.getContests(msg.chat.id, "Codechef", codechef, topic, MAX_DAYS, ctx);
     }
 
     else if(platform == "usaco") {
-        contests.getContests(msg.chat.id, "USACO", usaco, topic, MAX_DAYS, bot);
+        contests.getContests(msg.chat.id, "USACO", usaco, topic, MAX_DAYS, ctx);
     }
 
     else {
-        bot.api.sendMessage(msg.chat.id, "Platform " + platform + " isn't in my database!", {
-            message_thread_id: topic
-        });
+        ctx.reply("Platform " + platform + " isn't in my database!");
     }
 
 });

@@ -2,7 +2,7 @@
 var usaco = "https://clist.by/api/v4/contest/?username=RuntimeError0&api_key=f11119d090d20aecdb2835c60d564587b92ac06a&resource_id=25&upcoming=true&format=json";
 var codechef = "https://clist.by/api/v4/contest/?username=RuntimeError0&api_key=f11119d090d20aecdb2835c60d564587b92ac06a&resource_id=2&upcoming=true&format=json";
 
-function updateContestsDaily(prevDay, chatid, threadid) {
+function updateContestsDaily(prevDay, chatid, threadid, ctx) {
 
     if(chatid === -1) {
         console.log("Invalid CHAT ID: " + chatid);
@@ -18,17 +18,16 @@ function updateContestsDaily(prevDay, chatid, threadid) {
     var day = dateFormat.format(now);
 
     if(day != prevDay) {
-        bot.api.sendMessage(chatid, "<b>Daily Report: </b>\n", {
-            message_thread_id: threadid,
+        ctx.reply("<b>Daily Report: </b>\n", {
             parse_mode: "HTML"
         })
-        getCodeforces(chatid, threadid, 0);
-        getContests(chatid, "Codechef", codechef, threadid, 0);
-        getContests(chatid, "USACO", usaco, threadid, 0);
+        getCodeforces(chatid, threadid, 0, ctx);
+        getContests(chatid, "Codechef", codechef, threadid, 0, ctx);
+        getContests(chatid, "USACO", usaco, threadid, 0, ctx);
     }
 
     setTimeout(() => {
-        updateContests(day, chatid, threadid);
+        updateContestsDaily(day, chatid, threadid, ctx);
     }, 1000 * 60 * 60);
 
 }
@@ -42,7 +41,7 @@ function diff_hours(dt2, dt1)
   
  }
 
-async function getCodeforces(chatid, threadid, maxtime, bot) {
+async function getCodeforces(chatid, threadid, maxtime, ctx) {
 
     const response = await fetch("https://codeforces.com/api/contest.list?gym=false");
     const data = await response.json();
@@ -93,9 +92,8 @@ async function getCodeforces(chatid, threadid, maxtime, bot) {
         message += tmp + '\n';
     }
 
-    bot.api.sendMessage(chatid, message, {
+    ctx.reply(message, {
         "parse_mode": "HTML",
-        "message_thread_id": threadid
     });
 
 
@@ -138,9 +136,8 @@ async function getContests(chatid, name, api, threadid, maxtime, bot) {
         message += msg + '\n';
     }
 
-    bot.api.sendMessage(chatid, message, {
+    ctx.reply(message, {
         "parse_mode": "HTML",
-        "message_thread_id": threadid
     });
 
 }
