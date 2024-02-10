@@ -33,6 +33,7 @@ bot.command('setmainchannel', ctx => {
 });
 
 bot.command("contests", ctx => {
+    const msg = ctx.message;
     const platform = ctx.match;
     const topic = ctx.message.is_topic_message ? ctx.message.message_id : undefined;
     if(platform == "codeforces") {
