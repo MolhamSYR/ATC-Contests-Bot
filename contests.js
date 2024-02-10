@@ -75,7 +75,7 @@ async function getCodeforces(chatid, threadid, maxtime) {
 
         var daydiff = Math.floor(start / (1000 * 60 * 60 * 24)); 
 
-        if(daydiff > maxtime && daydiff < 0) continue;
+        if(daydiff > maxtime || daydiff < 0) continue;
          
 
         msg += "<b>Date:</b> " + lastdate + '\n';
@@ -124,7 +124,7 @@ async function getContests(chatid, name, api, threadid, maxtime) {
         var start = dt - now;
         var daydiff = Math.floor(start / (1000 * 60 * 60 * 24));  
 
-        if(daydiff > maxtime && daydiff < 0) continue;
+        if(daydiff > maxtime || daydiff < 0) continue;
 
         msg += "<b>Date:</b> " + lastdate + '\n';
         msg += "<b>Time Left:</b> " +  daydiff + " days left\n";
