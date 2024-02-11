@@ -25,6 +25,7 @@ bot.command('setmainchannel', async (ctx) => {
         threadID = ctx.message.message_thread_id;
     }
 
+    database.addGroup(chatID);
     database.setMainThreadId(chatID, threadID);
 
     ctx.reply("<b>This channel has been set as main channel successfully!</b>" , {

@@ -27,6 +27,21 @@ async function getGroups() {
     return groups;
 }
 
+async function addGroup(chatID) {
+
+    var groups = await db.get("allGroups").props.groups;
+
+    if(groups == undefined) {
+        await db.set("allGroups", {
+            "groups": []
+        });
+        groups = [];
+    }
+
+    groups.push(chatID);
+
+}
+
 async function setMainThreadId(chatID, threadID) {
 
     var key = chatID.toString();
@@ -43,4 +58,4 @@ async function setMainThreadId(chatID, threadID) {
 
 }
 
-module.exports = { setMainThreadId, getMainThreadId, getGroups };
+module.exports = { setMainThreadId, getMainThreadId, getGroups, addGroup };
