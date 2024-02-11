@@ -81,16 +81,20 @@ async function updateContestsDaily(prevDay, bot) {
         timeZone: "Asia/Damascus",
         day: "numeric"
     });
-    
+    const toSend = await getAllContests(7);
     var day = dateFormat.format(now);
     console.log("OUTSIDE OF DAY STATEMENT");
     if(day != prevDay) {
+
         console.log("GOT TO PREV DAY != DAY");
+
         var groups = await database.getGroups();
-        const toSend = await getAllContests(7);
         console.log("GOT MESSAGE: ");
+
         console.log(toSend);
+
         for(var chatID of groups) {
+            
             console.log("SENDING TO CHAT ID: " + chatID);
             var threadID = await database.getMainThreadId(chatID);
     
