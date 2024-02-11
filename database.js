@@ -68,7 +68,7 @@ async function setMainThreadId(chatID, threadID) {
     }
 
     else {
-        await db.set(key, {});
+        await db.set(key, {"threadID": undefined});
     }
 
     var test = await db.get(key);
