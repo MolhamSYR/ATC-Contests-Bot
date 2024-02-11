@@ -12,10 +12,29 @@ var MAIN_THREAD = process.env.MAIN_THREAD;
 const MAX_DAYS = 5;
 
 bot.command('start', async (ctx) => {
-    await ctx.reply("Hello! Welcome to Aleppo Teenagers Competitors' Bot!\nIf you are in a supergroup, Make sure to use the command /setmainchannel");
+    var chatID = ctx.message.chat.id;
+    var threadID = undefined;
+    if(ctx.message.is_topic_message) {
+        threadID = ctx.message.message_thread_id;
+    }
+    bot.api.sendMessage(chatID, "Hello! Welcome to Aleppo Teenagers Competitors' Bot!\nIf you are in a supergroup, Make sure to use the command /setmainchannel", {
+        parse_mode: "HTML",
+        message_thread_id: threadID
+    });
 });
 
+bot.command('testmainchannel', async (ctx) => {
+    var chatID = ctx.message.chat.id;
+    var threadID = undefined;
+    if(ctx.message.is_topic_message) {
+        threadID = database.getMainThreadId(chatID);
+    }
 
+    bot.api.sendMessage(chatID, "Testing Main Channel! " , {
+        message_thread_id: threadID
+    })
+
+});
 
 bot.command('setmainchannel', async (ctx) => {
 
@@ -28,12 +47,18 @@ bot.command('setmainchannel', async (ctx) => {
     database.addGroup(chatID);
     database.setMainThreadId(chatID, threadID);
 
-    ctx.reply("<b>This channel has been set as main channel successfully!</b>" , {
-        parse_mode: "HTML"
+    bot.api.sendMessage(chatID, "<b>This channel has been set as main channel successfully!</b>" , {
+        parse_mode: "HTML",
+        message_thread_id: threadID
     })
 });
 
 bot.command("contests", async (ctx) => {
+    var chatID = ctx.message.chat.id;
+    var threadID = undefined;
+    if(ctx.message.is_topic_message) {
+        threadID = ctx.message.message_thread_id;
+    }
     const msg = ctx.message;
     const txt = msg.text;
     const platform = txt.substring(txt.indexOf(" ") + 1);
@@ -44,41 +69,49 @@ bot.command("contests", async (ctx) => {
     const topic = ctx.message.is_topic_message ? ctx.message.message_id : undefined;
     if(platform == "codeforces") {
         const tosend = await contests.getContests(msg.chat.id, "Codeforces", codeforces ,topic,7);
-        await ctx.reply(tosend, {
-            parse_mode: "HTML"
+        bot.api.sendMessage(chatID, tosend, {
+            parse_mode: "HTML",
+            message_thread_id: threadID
         });
     }
 
     else if(txt == "/contests") {
         const tosend = await contests.getAllContests(7);
-        await ctx.reply(tosend, {
-            parse_mode: "HTML"
+        bot.api.sendMessage(chatID, tosend, {
+            parse_mode: "HTML",
+            message_thread_id: threadID
         });
     }
 
     else if(platform == "codechef") {
         const tosend = await contests.getContests(msg.chat.id, "Codechef", codechef, topic, 7);
-        await ctx.reply(tosend, {
-            parse_mode: "HTML"
+        bot.api.sendMessage(chatID, tosend, {
+            parse_mode: "HTML",
+            message_thread_id: threadID
         });
     }
 
     else if(platform == "atcoder") {
         const tosend = await contests.getContests(msg.chat.id, "AtCoder", atcoder, topic, 7);
-        await ctx.reply(tosend, {
-            parse_mode: "HTML"
+        bot.api.sendMessage(chatID, tosend, {
+            parse_mode: "HTML",
+            message_thread_id: threadID
         });
     }
 
     else if(platform == "usaco") {
         const tosend = await contests.getContests(msg.chat.id, "USACO", usaco, topic, 7);
-        await ctx.reply(tosend, {
-            parse_mode: "HTML"
+        bot.api.sendMessage(chatID, tosend, {
+            parse_mode: "HTML",
+            message_thread_id: threadID
         });
     }
 
     else {
-        ctx.reply("Platform " + platform + " isn't in my database!");
+        bot.api.sendMessage(chatID, "Platform " + platform + " isn't in my database!", {
+            parse_mode: "HTML",
+            message_thread_id: threadID
+        });
     }
 
 });
