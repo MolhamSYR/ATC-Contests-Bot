@@ -99,11 +99,11 @@ async function updateContestsDaily(prevDay, bot) {
             });
 
         }
-        
+
     }
 
     setTimeout(() => {
-        updateContestsDaily(day, chatid, threadid, bot);
+        updateContestsDaily(day, bot);
     }, 1000 * 60 * 60);
 
 }
