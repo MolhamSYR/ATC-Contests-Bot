@@ -3,10 +3,10 @@ const CyclicDB = require('@cyclic.sh/dynamodb');
 const DATABASE_TOKEN = process.env.CYCLIC_DB;
 const database = CyclicDB(DATABASE_TOKEN);
 
-const db = database.collection('groups');
+
 
 async function getMainThreadId(chatID) {
-
+    const db = database.collection('groups');
     var key = chatID.toString();
 
     var item = await db.get(key);
@@ -16,7 +16,7 @@ async function getMainThreadId(chatID) {
 }
 
 async function getGroups() {
-
+    const db = database.collection('groups');
     var AllGroups = await db.get("allGroups");
 
     if(AllGroups == undefined || AllGroups == null) {
@@ -30,7 +30,7 @@ async function getGroups() {
 }
 
 async function addGroup(chatID) {
-
+    const db = database.collection('groups');
     var AllGroups = await db.get("allGroups");
 
     if(AllGroups == undefined || AllGroups == null) {
@@ -54,7 +54,7 @@ async function addGroup(chatID) {
 }
 
 async function setMainThreadId(chatID, threadID) {
-
+    const db = database.collection('groups');
     var key = chatID.toString();
 
     await db.set(key , {
