@@ -85,7 +85,7 @@ async function updateContestsDaily(prevDay, bot) {
     var day = dateFormat.format(now);
     console.log("OUTSIDE OF DAY STATEMENT");
     if(day != prevDay) {
-        const toSend = getAllContests(7);
+        const toSend = await getAllContests(7);
         console.log("GOT TO PREV DAY != DAY");
 
         var groups = database.getGroups();
