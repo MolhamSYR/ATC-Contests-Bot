@@ -134,6 +134,7 @@ app.post('/webhook', Telegram.webhookCallback(bot, "express"));
 app.listen(3000, () => {
     bot.api.setWebhook("" + process.env.SERVER_URL + "/webhook");
     console.log("Running!");
+    contests.updateContestsDaily(bot);
 })
 
 module.exports = { bot };
