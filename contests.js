@@ -100,7 +100,7 @@ async function updateContestsDaily(bot) {
 
     setTimeout(() => {
         updateContestsDaily(bot);
-    }, 1000 * 60 * 60 * 24);
+    }, 1000 * 10);
 
 }
 
