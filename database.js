@@ -29,16 +29,21 @@ async function getGroups() {
 
 async function addGroup(chatID) {
 
-    var groups = await db.get("allGroups").props.groups;
+    var AllGroups = await db.get("allGroups");
 
-    if(groups == undefined) {
+    if(AllGroups == undefined) {
         await db.set("allGroups", {
             "groups": []
         });
-        groups = [];
     }
 
+    AllGroups = await db.get("allGroups");
+
+    var groups = AllGroups.props.groups;
+
     groups.push(chatID);
+
+    await db.set("allGroups", AllGroups);
 
 }
 
