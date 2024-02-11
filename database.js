@@ -48,8 +48,10 @@ async function addGroup(chatID) {
     if(groups.indexOf(chatID) === -1) {
 
         groups.push(chatID);
-        AllGroups.props.groups = groups;
-        await db.set("allGroups", AllGroups);
+        
+        await db.set("allGroups", {
+            "groups": groups
+        });
 
     }
 
