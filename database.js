@@ -10,7 +10,9 @@ async function getMainThreadId(chatID) {
     var key = chatID.toString();
 
     var item = await db.get(key);
-    
+
+    if(item.props.threadID === -1) return undefined;
+
     return item.props.threadID;
 }
 
@@ -68,7 +70,7 @@ async function setMainThreadId(chatID, threadID) {
     }
 
     else {
-        await db.set(key, {"threadID": undefined});
+        await db.set(key, {"threadID": -1});
     }
 
     var test = await db.get(key);
