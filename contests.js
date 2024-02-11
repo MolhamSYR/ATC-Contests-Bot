@@ -87,7 +87,7 @@ async function updateContestsDaily(prevDay, bot) {
     if(day != prevDay) {
         
         var groups = await database.getGroups();
-
+        console.log(groups);
         for(var chatid of groups) {
 
             var threadID = await database.getMainThreadId(groups);
