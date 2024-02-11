@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 app.use(express.json());
+const database = require('./database');
 const Telegram = require('grammy');
 const TOKEN = process.env.TOKEN;
 const bot = new Telegram.Bot(TOKEN);
@@ -11,19 +12,24 @@ var MAIN_THREAD = process.env.MAIN_THREAD;
 const MAX_DAYS = 5;
 
 bot.command('start', async (ctx) => {
-    await ctx.reply("Hello! Welcome to Aleppo Teenagers Competitors' Bot!");
+    await ctx.reply("Hello! Welcome to Aleppo Teenagers Competitors' Bot!\nIf you are in a supergroup, Make sure to use the command /setmainchannel");
 });
 
-bot.command('setmainchannel', async (ctx) => {
-    process.env['MAIN_CHANNEL'] = ctx.message.chat.id;
 
+
+bot.command('setmainchannel', async (ctx) => {
+
+    var chatID = ctx.message.chat.id;
+    var threadID = undefined;
     if(ctx.message.is_topic_message) {
-        process.env['MAIN_THREAD'] = ctx.message.message_thread_id;
-        MAIN_THREAD = process.env.MAIN_THREAD;
+        threadID = ctx.message.message_thread_id;
     }
 
-    MAIN_CHANNEL = process.env.MAIN_CHANNEL;
+    database.setMainThreadId(chatID, threadID);
 
+    ctx.reply("<b>This channel has been set as main channel successfully!</b>" , {
+        parse_mode: "HTML"
+    })
 });
 
 bot.command("contests", async (ctx) => {
@@ -43,7 +49,7 @@ bot.command("contests", async (ctx) => {
     }
 
     else if(txt == "/contests") {
-        const tosend = await contests.getAllContests(msg.chat.id, topic,7);
+        const tosend = await contests.getAllContests(7);
         await ctx.reply(tosend, {
             parse_mode: "HTML"
         });
@@ -76,7 +82,7 @@ bot.command("contests", async (ctx) => {
 
 });
 
-
+contests.updateContestsDaily(contests.getDayNow() - 1, bot);
 
 
 app.post('/webhook', Telegram.webhookCallback(bot, "express"));

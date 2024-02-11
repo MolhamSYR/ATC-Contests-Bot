@@ -2,7 +2,7 @@ var usaco = "https://clist.by/api/v4/contest/?username=RuntimeError0&api_key=f11
 var codechef = "https://clist.by/api/v4/contest/?username=RuntimeError0&api_key=f11119d090d20aecdb2835c60d564587b92ac06a&resource_id=2&upcoming=true&format=json";
 var atcoder = "https://clist.by/api/v4/contest/?username=RuntimeError0&api_key=f11119d090d20aecdb2835c60d564587b92ac06a&resource_id=93&upcoming=true&format=json";
 var codeforces = "https://clist.by/api/v4/contest/?username=RuntimeError0&api_key=f11119d090d20aecdb2835c60d564587b92ac06a&resource_id=1&upcoming=true&format=json";
-
+const database = require('./database');
 const ALL_NAMES = ["Codeforces" , "AtCoder", "Codechef", "USACO"];
 var ALL_PLATFORMS = new Map();
 
@@ -11,7 +11,7 @@ ALL_PLATFORMS.set("AtCoder", atcoder);
 ALL_PLATFORMS.set("Codechef", codechef);
 ALL_PLATFORMS.set("USACO", usaco);
 
-async function getAllContests(chatid, threadid, maxtime) {
+async function getAllContests(maxtime) {
 
     let message = "<b> <i>Upcoming Contests in 7 Days</i> </b>\n\n";
     let allContests = [];
@@ -73,12 +73,8 @@ async function getAllContests(chatid, threadid, maxtime) {
 
 }
 
-function updateContestsDaily(prevDay, chatid, threadid, bot) {
 
-    if(chatid === -1) {
-        console.log("Invalid CHAT ID: " + chatid);
-        return;
-    }
+async function updateContestsDaily(prevDay, bot) {
 
     var now = new Date();
     var dateFormat = new Intl.DateTimeFormat("en-US", {
@@ -89,16 +85,29 @@ function updateContestsDaily(prevDay, chatid, threadid, bot) {
     var day = dateFormat.format(now);
 
     if(day != prevDay) {
-       
-        const toSend = getAllContests(chatid, threadid, 7);
         
+        var groups = await database.getGroups();
+
+        for(var chatid of groups) {
+
+            var threadID = await database.getMainThreadId(groups);
+
+            const toSend = getAllContests(chatid, threadid, 7);
+            bot.api.sendMessage(chatid, toSend, {
+                parse_mode: "HTML",
+                message_thread_id: threadid
+            });
+
+        }
     }
 
     setTimeout(() => {
-        updateContestsDaily(day, chatid, threadid, ctx);
+        updateContestsDaily(day, chatid, threadid, bot);
     }, 1000 * 60 * 60);
 
 }
+
+
 
 function diff_hours(dt2, dt1) 
  {
