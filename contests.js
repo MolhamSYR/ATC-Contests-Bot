@@ -74,21 +74,12 @@ async function getAllContests(maxtime) {
 }
 
 
-async function updateContestsDaily(prevDay, bot) {
+async function updateContestsDaily(bot) {
 
-    var now = new Date();
-    var dateFormat = new Intl.DateTimeFormat("en-US", {
-        timeZone: "Asia/Damascus",
-        day: "numeric"
-    });
-    
-    var day = dateFormat.format(now);
-    console.log("OUTSIDE OF DAY STATEMENT");
-    if(day != prevDay) {
         const toSend = await getAllContests(7);
         console.log("GOT TO PREV DAY != DAY");
 
-        var groups = database.getGroups();
+        var groups = await database.getGroups();
         console.log("GOT MESSAGE: ");
 
         console.log(toSend);
@@ -105,11 +96,11 @@ async function updateContestsDaily(prevDay, bot) {
 
         }
 
-    }
+    
 
     setTimeout(() => {
-        updateContestsDaily(day, bot);
-    }, 1000 * 60 * 60);
+        updateContestsDaily(bot);
+    }, 1000 * 60 * 60 * 24);
 
 }
 
