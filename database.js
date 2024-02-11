@@ -1,4 +1,4 @@
-require('env').config();
+require('dotenv').config();
 const CyclicDB = require('@cyclic.sh/dynamodb');
 const DATABASE_TOKEN = process.env.CYCLIC_DB;
 const database = CyclicDB(DATABASE_TOKEN);
