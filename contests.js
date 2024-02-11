@@ -73,6 +73,10 @@ async function getAllContests(maxtime) {
 
 }
 
+async function sleep(ms) {
+    return new Promise(res => setTimeout(res, ms));
+}
+
 
 async function updateContestsDaily(bot) {
 
@@ -96,11 +100,10 @@ async function updateContestsDaily(bot) {
 
         }
 
-        setTimeout(() => {
-            updateContestsDaily(bot);
-        }, 1000 * 10);
+        sleep(1000 * 10);
+        await updateContestsDaily(bot);
 
-}
+    }
 
 
 
