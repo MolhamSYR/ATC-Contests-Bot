@@ -53,6 +53,8 @@ async function addGroup(chatID) {
 
     }
 
+    console.log("NEW GROUPS: " + groups);
+
 }
 
 async function setMainThreadId(chatID, threadID) {
