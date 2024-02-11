@@ -32,8 +32,9 @@ async function getGroups() {
 async function addGroup(chatID) {
     const db = database.collection('groups');
     var AllGroups = await db.get("allGroups");
-
+    console.log("ADDING " + chatID + " TO GROUPS!!!");
     if(AllGroups == undefined || AllGroups == null) {
+        console.log("GROUPS IS UNDEFINED OR NULL !!!");
         await db.set("allGroups", {
             "groups": []
         });
@@ -42,7 +43,8 @@ async function addGroup(chatID) {
     AllGroups = await db.get("allGroups");
 
     var groups = AllGroups.props.groups;
-
+    console.log("FOUND GROUPS!!!");
+    console.log(groups);
     if(groups.indexOf(chatID) === -1) {
 
         groups.push(chatID);
