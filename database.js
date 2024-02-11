@@ -17,7 +17,7 @@ async function getGroups() {
 
     var AllGroups = await db.get("allGroups");
 
-    if(groups == undefined) {
+    if(AllGroups == undefined) {
         await db.set("allGroups", {
             "groups": []
         });
