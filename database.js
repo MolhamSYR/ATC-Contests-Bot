@@ -29,6 +29,8 @@ async function getGroups() {
 
     }
 
+    console.log("HERE IS GROUP LIST: " + AllGroups.props.groups);
+
     return AllGroups.props.groups;
 }
 // 90% DONE DEBUGGING
