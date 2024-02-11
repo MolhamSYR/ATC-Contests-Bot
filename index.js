@@ -25,11 +25,9 @@ bot.command('start', async (ctx) => {
 
 bot.command('testmainchannel', async (ctx) => {
     var chatID = ctx.message.chat.id;
-    var threadID = undefined;
-    if(ctx.message.is_topic_message) {
-        threadID = database.getMainThreadId(chatID);
-    }
 
+    var threadID = database.getMainThreadId(chatID);
+   
     bot.api.sendMessage(chatID, "Testing Main Channel! " , {
         message_thread_id: threadID
     })
