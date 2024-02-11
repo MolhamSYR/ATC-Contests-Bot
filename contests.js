@@ -88,8 +88,10 @@ async function updateContestsDaily(prevDay, bot) {
         
         var groups = await database.getGroups();
         const toSend = await getAllContests(7);
+        console.log("GOT MESSAGE: ");
+        console.log(toSend);
         for(var chatID of groups) {
-
+            console.log("SENDING TO CHAT ID: " + chatID);
             var threadID = await database.getMainThreadId(chatID);
     
             bot.api.sendMessage(chatID, toSend, {
