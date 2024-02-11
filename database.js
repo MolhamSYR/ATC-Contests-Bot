@@ -15,16 +15,16 @@ async function getMainThreadId(chatID) {
 
 async function getGroups() {
 
-    var groups = await db.get("allGroups").props.groups;
+    var AllGroups = await db.get("allGroups");
 
     if(groups == undefined) {
         await db.set("allGroups", {
             "groups": []
         });
-        groups = [];
+
     }
 
-    return groups;
+    return AllGroups.props.groups;
 }
 
 async function addGroup(chatID) {
