@@ -65,7 +65,7 @@ async function setMainThreadId(chatID, threadID) {
         "threadID": threadID
     });
 
-    var test = db.get(key);
+    var test = await db.get(key);
 
     console.log("" + chatID + " 's Thread ID has been set to " + test.props.threadID);
 
