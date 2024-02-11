@@ -60,7 +60,7 @@ async function setMainThreadId(chatID, threadID) {
 
     const db = database.collection('groups');
     var key = chatID.toString();
-
+    console.log("Trying to set Thread ID to: " + threadID + " :");
     await db.set(key , {
         "threadID": threadID
     });
