@@ -92,7 +92,7 @@ async function updateContestsDaily(prevDay, bot) {
 
             var threadID = await database.getMainThreadId(chatID);
         
-            const toSend = getAllContests(7);
+            const toSend = await getAllContests(7);
             bot.api.sendMessage(chatID, toSend, {
                 parse_mode: "HTML",
                 message_thread_id: threadID
