@@ -101,7 +101,7 @@ async function updateContestsDaily(bot) {
         }
 
         sleep(1000 * 10);
-        await updateContestsDaily(bot);
+        updateContestsDaily(bot);
 
     }
 
