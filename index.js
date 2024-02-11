@@ -129,16 +129,11 @@ bot.command("contests", async (ctx) => {
 });
 
 
-async function keepUpdated(bot) {
-    await contests.updateContestsDaily(bot);
-}
-
 app.post('/webhook', Telegram.webhookCallback(bot, "express"));
 
 app.listen(3000, () => {
     bot.api.setWebhook("" + process.env.SERVER_URL + "/webhook");
     console.log("Running!");
-    setInterval(keepUpdated(bot), 1000 * 10);
 })
 
 module.exports = { bot };
