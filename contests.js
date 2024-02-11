@@ -91,7 +91,7 @@ async function updateContestsDaily(prevDay, bot) {
         for(var chatID of groups) {
 
             var threadID = await database.getMainThreadId(groups);
-
+        
             const toSend = getAllContests(7);
             bot.api.sendMessage(chatID, toSend, {
                 parse_mode: "HTML",
@@ -99,6 +99,7 @@ async function updateContestsDaily(prevDay, bot) {
             });
 
         }
+        
     }
 
     setTimeout(() => {
