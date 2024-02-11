@@ -61,8 +61,6 @@ async function setMainThreadId(chatID, threadID) {
 
     var groups = await db.get("allGroups");
 
-    groups.props.groups.push(chatID);
-
     await db.set("allGroups", groups);
 
 }

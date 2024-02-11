@@ -53,6 +53,20 @@ bot.command('setmainchannel', async (ctx) => {
     })
 });
 
+bot.command("testdaily", async (ctx) => {
+    var chatID = ctx.message.chat.id;
+    var threadID = undefined;
+    if(ctx.message.is_topic_message) {
+        threadID = ctx.message.message_thread_id;
+    }
+
+    bot.api.sendMessage(chatID, "Sent Updates to Everyone!", {
+        message_thread_id: threadID
+    })
+
+    contests.updateContestsDaily(contests.getDayNow() - 1, bot);
+});
+
 bot.command("contests", async (ctx) => {
     var chatID = ctx.message.chat.id;
     var threadID = undefined;
@@ -116,7 +130,7 @@ bot.command("contests", async (ctx) => {
 
 });
 
-contests.updateContestsDaily(contests.getDayNow() - 1, bot);
+
 
 
 app.post('/webhook', Telegram.webhookCallback(bot, "express"));
