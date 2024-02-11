@@ -1,5 +1,7 @@
+require('env').config();
 const CyclicDB = require('@cyclic.sh/dynamodb');
-const database = CyclicDB(process.env.CYCLIC_DB);
+const DATABASE_TOKEN = process.env.CYCLIC_DB;
+const database = CyclicDB(DATABASE_TOKEN);
 
 const db = database.collection('groups');
 
