@@ -11,23 +11,33 @@ ALL_PLATFORMS.set("AtCoder", atcoder);
 ALL_PLATFORMS.set("Codechef", codechef);
 ALL_PLATFORMS.set("USACO", usaco);
 
+
+async function makeAPICall(endpoint) {
+    const response = await fetch(endpoint);
+    const data = await response.json();
+    return data;
+}
+
+async function makeMultipleAPICalls(endpoints) {
+    const promises = endpoints.map(makeAPICall);
+    const responses = await Promise.all(promises);
+    return responses;
+}
+
 async function getAllContests(maxtime) {
 
     let message = "<b> <i>Upcoming Contests in 7 Days</i> </b>\n\n";
     let allContests = [];
-    for(platname of ALL_NAMES) {
 
-        const api = ALL_PLATFORMS.get(platname);
-        var response;
-        var data;
-        try {
-            response = await fetch(api);
-            data = await response.json();
-        } catch(err) {
-            console.log("Error: " + err);
-        }
+    const responses = await makeMultipleAPICalls([codeforces, atcoder, codechef, usaco]);
 
-        console.log("GOT SOME HUGE DATA FROM " + platname);
+    var plat = 0;
+    const platnames = ["Codeforces", "AtCoder", "Codechef", "USACO"];
+    for(var response of responses) {
+
+        const data = await response.json();
+
+        console.log("GOT SOME HUGE DATA FROM " + platnames[plat]);
         console.log(data.objects);
         
         
@@ -67,10 +77,10 @@ async function getAllContests(maxtime) {
             else return 1;
         })
 
-
+        plat = plate + 1;
     }
 
-    for(one of allContests) {
+    for(let one of allContests) {
         message += one.value + '\n';
     }
 
