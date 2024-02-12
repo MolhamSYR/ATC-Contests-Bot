@@ -61,7 +61,7 @@ async function getAllContests(maxtime) {
             var daydiff = Math.floor(start / (1000 * 60 * 60 * 24));  
 
             if(daydiff > maxtime || daydiff < 0) continue;
-            msg += "<b>Platform:</b> " + platname + '\n';
+            msg += "<b>Platform:</b> " + platnames[plat] + '\n';
             msg += "<b>Date:</b> " + lastdate + '\n';
             msg += "<b>Time Left:</b> " +  daydiff + " days left\n";
 
