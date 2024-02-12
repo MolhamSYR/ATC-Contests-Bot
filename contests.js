@@ -93,20 +93,29 @@ async function updateContestsDaily(bot) {
 
         var groups = await database.getGroups();
         console.log("GOT MESSAGE: ");
-
+        var threadIDs = [];
         console.log(toSend);
 
+        var cnt = 0;
         groups.forEach(async chatID => {
+            threadIDs[cnt] = await database.getMainThreadId(chatID);
+            cnt = cnt + 1;
+        });
 
-            console.log("SENDING TO CHAT ID: " + chatID);
-            var threadID = await database.getMainThreadId(chatID);
-    
+        cnt = 0;
+        groups.forEach(async chatID => {
+            
+            const threadID = threadIDs[cnt];
+
             bot.api.sendMessage(chatID, toSend, {
                 parse_mode: "HTML",
                 message_thread_id: threadID
             });
+            
+            cnt = cnt + 1;
+        })
 
-        });
+
 
     }
 
