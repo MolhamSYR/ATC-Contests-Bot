@@ -7,20 +7,21 @@ const Telegram = require('grammy');
 const TOKEN = process.env.TOKEN;
 const bot = new Telegram.Bot(TOKEN);
 const contests = require('./contests');
-var MAIN_CHANNEL = process.env.MAIN_CHANNEL;
-var MAIN_THREAD = process.env.MAIN_THREAD;
-const MAX_DAYS = 5;
 
 bot.command('start', async (ctx) => {
+
     var chatID = ctx.message.chat.id;
     var threadID = undefined;
+
     if(ctx.message.is_topic_message) {
         threadID = ctx.message.message_thread_id;
     }
+
     bot.api.sendMessage(chatID, "Hello! Welcome to Aleppo Teenagers Competitors' Bot!\nIf you are in a supergroup, Make sure to use the command /setmainchannel", {
         parse_mode: "HTML",
         message_thread_id: threadID
     });
+
 });
 
 bot.command('testmainchannel', async (ctx) => {
@@ -42,7 +43,6 @@ bot.command('setmainchannel', async (ctx) => {
         threadID = ctx.message.message_thread_id;
     }
 
-    await database.addGroup(chatID);
     await database.setMainThreadId(chatID, threadID);
 
     bot.api.sendMessage(chatID, "<b>This channel has been set as main channel successfully!</b>" , {

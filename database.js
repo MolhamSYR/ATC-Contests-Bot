@@ -19,46 +19,17 @@ async function getMainThreadId(chatID) {
 async function getGroups() {
 
     const db = database.collection('groups');
-    var AllGroups = await db.get("AllGroups");
+    const {results : groupsData} = await db.list();
 
-    if(AllGroups === undefined || AllGroups === null) {
-        await db.set("AllGroups", {
-            "groups": []
-        });
+    var groupsList = [];
 
-        AllGroups = await db.get("AllGroups");
+    groupsData.map(key => {
+        groupsList.push(key);
+    });
 
-    }
-
-    console.log("HERE IS GROUP LIST: " + AllGroups.props.groups);
-
-    return AllGroups.props.groups;
+    return groupsList;
 }
-// 90% DONE DEBUGGING
-async function addGroup(chatID) {
-    const db = database.collection('groups');
-    var AllGroups = await db.get("AllGroups");
- 
-    if(AllGroups === undefined || AllGroups === null) {
-        await db.set("AllGroups", {
-            "groups": []
-        });
-    }
 
-    AllGroups = await db.get("AllGroups");
-
-    var groups = AllGroups.props.groups;
-
-        if(groups.indexOf(chatID) === -1) {
-            groups.push(chatID);
-        }
-        
-        await db.set("AllGroups", {
-            "groups": groups
-        });
-
-    
-}
 
 async function setMainThreadId(chatID, threadID) {
 
@@ -81,4 +52,4 @@ async function setMainThreadId(chatID, threadID) {
 
 }
 
-module.exports = { setMainThreadId, getMainThreadId, getGroups, addGroup };
+module.exports = { setMainThreadId, getMainThreadId, getGroups };
