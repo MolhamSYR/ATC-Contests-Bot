@@ -128,8 +128,9 @@ bot.command("contests", async (ctx) => {
 
 });
 
-app.post('/update', async function() {
+app.post('/update', async (req, res) => {
     await contests.updateContestsDaily(bot);
+    return res.status(200).send();
 });
 
 

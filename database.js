@@ -19,11 +19,11 @@ async function getMainThreadId(chatID) {
 async function getGroups() {
 
     const db = database.collection('groups');
-    var AllGroups = await db.get("allGroups");
+    var AllGroups = await db.get("AllGroups");
 
     if(AllGroups === undefined || AllGroups === null) {
 
-        await db.set("allGroups", {
+        await db.set("AllGroups", {
             "groups": []
         });
 
@@ -36,30 +36,27 @@ async function getGroups() {
 // 90% DONE DEBUGGING
 async function addGroup(chatID) {
     const db = database.collection('groups');
-    var AllGroups = await db.get("allGroups");
+    var AllGroups = await db.get("AllGroups");
  
     if(AllGroups === undefined || AllGroups === null) {
       
-        await db.set("allGroups", {
+        await db.set("AllGroups", {
             "groups": []
         });
     }
 
-    AllGroups = await db.get("allGroups");
+    AllGroups = await db.get("AllGroups");
 
     var groups = AllGroups.props.groups;
     
 
-    if(groups.indexOf(chatID) === -1) {
-
-        groups.push(chatID);
+        groups.union([chatID]);
         
-        await db.set("allGroups", {
+        await db.set("AllGroups", {
             "groups": groups
         });
 
-    }
-
+    
 }
 
 async function setMainThreadId(chatID, threadID) {
