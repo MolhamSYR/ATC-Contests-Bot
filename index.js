@@ -128,6 +128,10 @@ bot.command("contests", async (ctx) => {
 
 });
 
+app.post('/update', async function() {
+    await contests.updateContestsDaily(bot);
+});
+
 
 app.post('/webhook', Telegram.webhookCallback(bot, "express"));
 
