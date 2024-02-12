@@ -33,11 +33,9 @@ async function getAllContests(maxtime) {
 
     var plat = 0;
     const platnames = ["Codeforces", "AtCoder", "Codechef", "USACO"];
-    for(var response of responses) {
+    for(var data of responses) {
 
-        const data = await response.json();
-
-        console.log("GOT SOME HUGE DATA FROM " + platnames[plat]);
+        console.log("Got Data from : " + platnames[plat]);
         console.log(data.objects);
         
         
