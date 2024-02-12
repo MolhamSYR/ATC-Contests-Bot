@@ -83,7 +83,7 @@ async function updateContestsDaily(bot) {
 
         console.log(toSend);
 
-        for(var chatID of groups) {
+        groups.forEach(async chatID => {
 
             console.log("SENDING TO CHAT ID: " + chatID);
             var threadID = await database.getMainThreadId(chatID);
@@ -93,7 +93,7 @@ async function updateContestsDaily(bot) {
                 message_thread_id: threadID
             });
 
-        }
+        });
 
     }
 
