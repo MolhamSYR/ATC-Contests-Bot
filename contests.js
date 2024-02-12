@@ -11,6 +11,8 @@ ALL_PLATFORMS.set("AtCoder", atcoder);
 ALL_PLATFORMS.set("Codechef", codechef);
 ALL_PLATFORMS.set("USACO", usaco);
 
+
+
 async function getAllContests(maxtime) {
 
     let message = "<b> <i>Upcoming Contests in 7 Days</i> </b>\n\n";
@@ -62,6 +64,7 @@ async function getAllContests(maxtime) {
             else return 1;
         })
 
+        await database.sleep(1000);
 
     }
 
@@ -75,10 +78,10 @@ async function getAllContests(maxtime) {
 
 async function updateContestsDaily(bot) {
 
-        const toSend = await getAllContests(7);
+        const toSend = getAllContests(7);
         console.log("GOT TO PREV DAY != DAY");
 
-        var groups = await database.getGroups();
+        var groups = database.getGroups();
         console.log("GOT MESSAGE: ");
 
         console.log(toSend);
@@ -86,7 +89,7 @@ async function updateContestsDaily(bot) {
         groups.forEach(async chatID => {
 
             console.log("SENDING TO CHAT ID: " + chatID);
-            var threadID = await database.getMainThreadId(chatID);
+            var threadID = database.getMainThreadId(chatID);
     
             bot.api.sendMessage(chatID, toSend, {
                 parse_mode: "HTML",

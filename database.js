@@ -16,6 +16,10 @@ async function getMainThreadId(chatID) {
     return item.props.threadID;
 }
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+ }
+
 async function getGroups() {
 
     const db = database.collection('groups');
@@ -81,4 +85,4 @@ async function setMainThreadId(chatID, threadID) {
 
 }
 
-module.exports = { setMainThreadId, getMainThreadId, getGroups, addGroup };
+module.exports = { setMainThreadId, getMainThreadId, getGroups, addGroup, sleep };
