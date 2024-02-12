@@ -18,10 +18,11 @@ async function getAllContests(maxtime) {
     for(platname of ALL_NAMES) {
 
         const api = ALL_PLATFORMS.get(platname);
-
+        var response;
+        var data;
         try {
-        const response = await fetch(api);
-        const data = await response.json();
+            response = await fetch(api);
+            data = await response.json();
         } catch(err) {
             console.log("Error: " + err);
         }
@@ -113,9 +114,11 @@ function diff_hours(dt2, dt1)
  }
 
 async function getContests(chatid, name, api, threadid, maxtime) {
+    var response;
+    var data;
     try {
-    const response = await fetch(api);
-    const data = await response.json();
+        response = await fetch(api);
+        data = await response.json();
     } catch(err) {
         console.log("Error: " + err);
     }
