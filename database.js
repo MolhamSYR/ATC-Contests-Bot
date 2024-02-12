@@ -22,9 +22,8 @@ async function getGroups() {
     var AllGroups = await db.get("AllGroups");
 
     if(AllGroups === undefined || AllGroups === null) {
-        const st = new Set([]);
         await db.set("AllGroups", {
-            "groups": st
+            "groups": []
         });
 
         AllGroups = await db.get("AllGroups");
@@ -41,9 +40,8 @@ async function addGroup(chatID) {
     var AllGroups = await db.get("AllGroups");
  
     if(AllGroups === undefined || AllGroups === null) {
-        const st = new Set([chatID]);
         await db.set("AllGroups", {
-            "groups": st
+            "groups": []
         });
     }
 
@@ -51,7 +49,9 @@ async function addGroup(chatID) {
 
     var groups = AllGroups.props.groups;
 
-        groups.add(chatID);
+        if(groups.indexOf(chatID) === -1) {
+            groups.push(chatID);
+        }
         
         await db.set("AllGroups", {
             "groups": groups
