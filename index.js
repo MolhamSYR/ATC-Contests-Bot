@@ -26,7 +26,7 @@ bot.command('start', async (ctx) => {
 bot.command('testmainchannel', async (ctx) => {
     var chatID = ctx.message.chat.id;
 
-    var threadID = database.getMainThreadId(chatID);
+    var threadID = await database.getMainThreadId(chatID);
    
     bot.api.sendMessage(chatID, "Testing Main Channel! " , {
         message_thread_id: threadID
@@ -42,8 +42,8 @@ bot.command('setmainchannel', async (ctx) => {
         threadID = ctx.message.message_thread_id;
     }
 
-     database.addGroup(chatID);
-     database.setMainThreadId(chatID, threadID);
+    await database.addGroup(chatID);
+    await database.setMainThreadId(chatID, threadID);
 
     bot.api.sendMessage(chatID, "<b>This channel has been set as main channel successfully!</b>" , {
         parse_mode: "HTML",
@@ -62,7 +62,7 @@ bot.command("testdaily", async (ctx) => {
         message_thread_id: threadID
     })
 
-     contests.updateContestsDaily(bot);
+    await contests.updateContestsDaily(bot);
 });
 
 bot.command("contests", async (ctx) => {
@@ -80,7 +80,7 @@ bot.command("contests", async (ctx) => {
     var codeforces = "https://clist.by/api/v4/contest/?username=RuntimeError0&api_key=f11119d090d20aecdb2835c60d564587b92ac06a&resource_id=1&upcoming=true&format=json";
     const topic = ctx.message.is_topic_message ? ctx.message.message_id : undefined;
     if(platform == "codeforces") {
-        const tosend = contests.getContests(msg.chat.id, "Codeforces", codeforces ,topic,7);
+        const tosend = await contests.getContests(msg.chat.id, "Codeforces", codeforces ,topic,7);
         bot.api.sendMessage(chatID, tosend, {
             parse_mode: "HTML",
             message_thread_id: threadID
@@ -88,7 +88,7 @@ bot.command("contests", async (ctx) => {
     }
 
     else if(txt == "/contests") {
-        const tosend = contests.getAllContests(7);
+        const tosend = await contests.getAllContests(7);
         bot.api.sendMessage(chatID, tosend, {
             parse_mode: "HTML",
             message_thread_id: threadID
@@ -96,7 +96,7 @@ bot.command("contests", async (ctx) => {
     }
 
     else if(platform == "codechef") {
-        const tosend = contests.getContests(msg.chat.id, "Codechef", codechef, topic, 7);
+        const tosend = await contests.getContests(msg.chat.id, "Codechef", codechef, topic, 7);
         bot.api.sendMessage(chatID, tosend, {
             parse_mode: "HTML",
             message_thread_id: threadID
@@ -104,7 +104,7 @@ bot.command("contests", async (ctx) => {
     }
 
     else if(platform == "atcoder") {
-        const tosend = contests.getContests(msg.chat.id, "AtCoder", atcoder, topic, 7);
+        const tosend = await contests.getContests(msg.chat.id, "AtCoder", atcoder, topic, 7);
         bot.api.sendMessage(chatID, tosend, {
             parse_mode: "HTML",
             message_thread_id: threadID
@@ -112,7 +112,7 @@ bot.command("contests", async (ctx) => {
     }
 
     else if(platform == "usaco") {
-        const tosend = contests.getContests(msg.chat.id, "USACO", usaco, topic, 7);
+        const tosend = await contests.getContests(msg.chat.id, "USACO", usaco, topic, 7);
         bot.api.sendMessage(chatID, tosend, {
             parse_mode: "HTML",
             message_thread_id: threadID
@@ -129,7 +129,7 @@ bot.command("contests", async (ctx) => {
 });
 
 app.post('/update', async (req, res) => {
-    contests.updateContestsDaily(bot);
+    await contests.updateContestsDaily(bot);
     return res.status(200).send();
 });
 
