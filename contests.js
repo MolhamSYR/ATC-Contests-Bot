@@ -19,13 +19,17 @@ async function getAllContests(maxtime) {
 
         const api = ALL_PLATFORMS.get(platname);
 
+        try {
         const response = await fetch(api);
         const data = await response.json();
+        } catch(err) {
+            console.log("Error: " + err);
+        }
+
         console.log("GOT SOME HUGE DATA FROM " + platname);
         console.log(data.objects);
         
         
-    
         for(var contest of data.objects) {
           
             let msg = "";
@@ -109,9 +113,12 @@ function diff_hours(dt2, dt1)
  }
 
 async function getContests(chatid, name, api, threadid, maxtime) {
-
+    try {
     const response = await fetch(api);
     const data = await response.json();
+    } catch(err) {
+        console.log("Error: " + err);
+    }
     console.log("GOT SOME HUGE DATA FROM " + name);
     console.log(data.objects);
     let message = "<b> <i>" + name + " Upcoming Contests: </i> </b>\n\n";
