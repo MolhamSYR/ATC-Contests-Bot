@@ -58,7 +58,7 @@ bot.command("testdaily", async (ctx) => {
         threadID = ctx.message.message_thread_id;
     }
 
-    bot.api.sendMessage(chatID, "Sent Updates to Everyone!", {
+    await bot.api.sendMessage(chatID, "Sending Updates to All Group Chats...", {
         message_thread_id: threadID
     })
 
@@ -137,9 +137,10 @@ app.post('/update', async (req, res) => {
 app.post('/webhook', Telegram.webhookCallback(bot, "express"));
 
 app.listen(3000, () => {
+    
     bot.api.setWebhook("" + process.env.SERVER_URL + "/webhook");
     console.log("Running!");
-    contests.updateContestsDaily(bot);
+    
 })
 
 module.exports = { bot };
