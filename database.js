@@ -6,8 +6,12 @@ const database = CyclicDB(DATABASE_TOKEN);
 
 
 async function getMainThreadId(chatID) {
-    const db = database.collection('groups');
+    const db = database.collection('Groups');
     var key = chatID.toString();
+
+    const groups = await getGroups();
+
+    if(groups.indexOf(chatID) === -1) return undefined;
 
     var item = await db.get(key);
 
@@ -18,7 +22,7 @@ async function getMainThreadId(chatID) {
 
 async function getGroups() {
 
-    const db = database.collection('groups');
+    const db = database.collection('Groups');
     const {results : groupsData} = await db.list();
 
     var groupsList = [];
@@ -33,7 +37,7 @@ async function getGroups() {
 
 async function setMainThreadId(chatID, threadID) {
 
-    const db = database.collection('groups');
+    const db = database.collection('Groups');
     var key = chatID.toString();
     console.log("Trying to set Thread ID to: " + threadID + " :");
     if(threadID != undefined) {
