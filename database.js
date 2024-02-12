@@ -27,8 +27,9 @@ async function getGroups() {
 
     var groupsList = [];
 
-    groupsData.map(key => {
-        groupsList.push(key);
+    groupsData.map(obj => {
+        const chatID = obj.key;
+        groupsList.push(chatID);
     });
 
     return groupsList;
