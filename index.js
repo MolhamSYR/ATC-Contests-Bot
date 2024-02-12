@@ -62,7 +62,7 @@ bot.command("testdaily", async (ctx) => {
         message_thread_id: threadID
     })
 
-    await contests.updateContestsDaily(bot);
+    contests.updateContestsDaily(bot);
 });
 
 bot.command("contests", async (ctx) => {
