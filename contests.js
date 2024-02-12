@@ -75,7 +75,7 @@ async function getAllContests(maxtime) {
             else return 1;
         })
 
-        plat = plate + 1;
+        plat = plat + 1;
     }
 
     for(let one of allContests) {
