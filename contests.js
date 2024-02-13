@@ -99,6 +99,7 @@ async function updateContestsDaily(bot) {
         var cnt = 0;
         groups.forEach(async chatID => {
             threadIDs[cnt] = await database.getMainThreadId(chatID);
+            console.log("Set Chat ID " + chatID + " 's Thread ID to " + threadIDs[cnt]);
             cnt = cnt + 1;
         });
 
@@ -107,13 +108,14 @@ async function updateContestsDaily(bot) {
             
             const threadID = threadIDs[cnt];
 
+            
             bot.api.sendMessage(chatID, toSend, {
                 parse_mode: "HTML",
                 message_thread_id: threadID
             });
-            
+            console.log("Sent Message to Chat ID: " + chatID + " Thread ID: " + threadID);
             cnt = cnt + 1;
-        })
+        });
 
 
 
