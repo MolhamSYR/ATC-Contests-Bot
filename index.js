@@ -128,13 +128,12 @@ bot.command("contests", async (ctx) => {
 
 });
 
+app.post('/webhook', Telegram.webhookCallback(bot, "express"));
+
 app.post('/update', async (req, res) => {
     await contests.updateContestsDaily(bot);
     return res.status(200).send();
 });
-
-
-app.post('/webhook', Telegram.webhookCallback(bot, "express"));
 
 app.listen(3000, () => {
     
