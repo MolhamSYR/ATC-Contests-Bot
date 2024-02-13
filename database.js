@@ -32,6 +32,8 @@ async function getGroups() {
         groupsList.push(chatID);
     });
 
+    console.log("Groups List: " + groupsList);
+
     return groupsList;
 }
 
