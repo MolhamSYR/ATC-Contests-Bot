@@ -29,7 +29,6 @@ async function getGroups() {
 
     groupsData.map(obj => {
         const chatID = obj.key;
-        console.log(chatID + " is Number : " + typeof chatID === 'number');
         groupsList.push(chatID);
     });
 
@@ -37,7 +36,6 @@ async function getGroups() {
 
     return groupsList;
 }
-
 
 async function setMainThreadId(chatID, threadID) {
 

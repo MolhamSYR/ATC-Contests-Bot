@@ -24,6 +24,14 @@ async function makeMultipleAPICalls(endpoints) {
     return responses;
 }
 
+async function isUserAdmin(ctx, userID, chatID) {
+
+    const user = await ctx.getChatMember(chatID, userID);
+
+    return user.status == "administrator" || user.status == "creator";
+
+}
+
 async function getAllContests(maxtime) {
 
     let message = "<b> <i>Upcoming Contests in 7 Days</i> </b>\n\n";
@@ -204,4 +212,4 @@ function getDayNow() {
     return day;
 }
 
-module.exports = {getAllContests, getContests, updateContestsDaily, getDayNow};
+module.exports = {getAllContests, getContests, updateContestsDaily, getDayNow, isUserAdmin};

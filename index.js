@@ -24,23 +24,52 @@ bot.command('start', async (ctx) => {
 
 });
 
-bot.command('testmainchannel', async (ctx) => {
+/*bot.command('testmainchannel', async (ctx) => {
     var chatID = ctx.message.chat.id;
 
     var threadID = await database.getMainThreadId(chatID);
-   
+
+    if(ctx.message.chat.type == "private") {
+        bot.api.sendMessage(chatID, "You cannot do that in a private chat!");
+        return;
+    }
+
+    if(!contests.isUserAdmin(ctx, userID, chatID)) {
+        bot.api.sendMessage(chatID, "You aren't allowed to do that!", {
+            message_thread_id: threadID
+        });
+        return;
+    }
+
+
     bot.api.sendMessage(chatID, "Testing Main Channel! " , {
         message_thread_id: threadID
     })
 
-});
+});*/
 
 bot.command('setmainchannel', async (ctx) => {
 
+    
+    
+    var userID = ctx.from.id;
     var chatID = ctx.message.chat.id;
     var threadID = undefined;
+
+    if(ctx.message.chat.type == "private") {
+        bot.api.sendMessage(chatID, "You cannot do that in a private chat!");
+        return;
+    }
+
     if(ctx.message.is_topic_message) {
         threadID = ctx.message.message_thread_id;
+    }
+
+    if(!contests.isUserAdmin(ctx, userID, chatID)) {
+        bot.api.sendMessage(chatID, "You aren't allowed to do that!", {
+            message_thread_id: threadID
+        });
+        return;
     }
 
     await database.setMainThreadId(chatID, threadID);
@@ -51,12 +80,25 @@ bot.command('setmainchannel', async (ctx) => {
     })
 });
 
-bot.command("testdaily", async (ctx) => {
+/*bot.command("testdaily", async (ctx) => {
     var chatID = ctx.message.chat.id;
     var threadID = undefined;
     if(ctx.message.is_topic_message) {
         threadID = ctx.message.message_thread_id;
     }
+
+    if(ctx.message.chat.type == "private") {
+        bot.api.sendMessage(chatID, "You cannot do that in a private chat!");
+        return;
+    }
+
+    if(!contests.isUserAdmin(ctx, userID, chatID)) {
+        bot.api.sendMessage(chatID, "You aren't allowed to do that!", {
+            message_thread_id: threadID
+        });
+        return;
+    }
+
 
     await bot.api.sendMessage(chatID, "Sending Updates to All Group Chats...", {
         message_thread_id: threadID
@@ -64,6 +106,8 @@ bot.command("testdaily", async (ctx) => {
 
     await contests.updateContestsDaily(bot);
 });
+*/
+
 
 bot.command("contests", async (ctx) => {
     var chatID = ctx.message.chat.id;
