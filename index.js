@@ -131,7 +131,7 @@ bot.command("contests", async (ctx) => {
         });
     }
 
-    else if(txt == "/contests") {
+    else if(txt == "/contests" || txt == "/contests@atc_contestsBot") {
         const tosend = await contests.getAllContests(7);
         bot.api.sendMessage(chatID, tosend, {
             parse_mode: "HTML",
@@ -164,7 +164,7 @@ bot.command("contests", async (ctx) => {
     }
 
     else {
-        bot.api.sendMessage(chatID, "Platform " + platform + " isn't in my database!", {
+        bot.api.sendMessage(chatID, "Unknown command, do /help", {
             parse_mode: "HTML",
             message_thread_id: threadID
         });
