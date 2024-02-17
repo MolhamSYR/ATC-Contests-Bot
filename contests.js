@@ -69,6 +69,7 @@ async function getAllContests(maxtime) {
                 month: "numeric"
             
             });
+            var hourdiff = 0;
             var lastdate = dateFormat.format(dt);
             var start = dt - now;
             var daydiff = Math.floor(start / (1000 * 60 * 60 * 24));  
@@ -80,16 +81,21 @@ async function getAllContests(maxtime) {
                 msg += "<b>Time Left:</b> " +  daydiff + " days left\n";
             }
             else {
-                msg += "<b>Time Left:</b> " + diff_hours(dt, now) + " hours left\n";
+                hourdiff = diff_hours(dt, now);
+                msg += "<b>Time Left:</b> " + hourdiff + " hours left\n";
             }
 
-            var pair = {"key": daydiff, "value": msg};
+            var pair = {"key": daydiff, "value": msg, "hour": hourdiff};
             allContests.push(pair);
         }
 
         allContests.sort((a,b) => {
             if(a.key < b.key) return -1;
-            else if(a.key == b.key) return 0;
+            else if(a.key == b.key) {
+                if(a.hour < b.hour) return -1;
+                else if(a.hour == b.hour) return 0;
+                else return 1;
+            }
             else return 1;
         })
 
@@ -185,7 +191,7 @@ async function getContests(chatid, name, api, threadid, maxtime) {
         var lastdate = dateFormat.format(dt);
         var start = dt - now;
         var daydiff = Math.floor(start / (1000 * 60 * 60 * 24));  
-
+        var hourdiff = 0;
         if(daydiff > maxtime || daydiff < 0) continue;
 
         msg += "<b>Platform:</b> " + name + '\n';
@@ -194,16 +200,21 @@ async function getContests(chatid, name, api, threadid, maxtime) {
             msg += "<b>Time Left:</b> " +  daydiff + " days left\n";
         }
         else {
-            msg += "<b>Time Left:</b> " + diff_hours(dt, now) + " hours left\n";
+            hourdiff = diff_hours(dt, now);
+            msg += "<b>Time Left:</b> " + hourdiff + " hours left\n";
         }
 
-        var pair = {"key": daydiff, "value": msg};
+        var pair = {"key": daydiff, "value": msg, "hour": hourdiff};
         allContests.push(pair);
     }
 
     allContests.sort((a,b) => {
         if(a.key < b.key) return -1;
-        else if(a.key == b.key) return 0;
+        else if(a.key == b.key) {
+            if(a.hour < b.hour) return -1;
+            else if(a.hour == b.hour) return 0;
+            else return 1;
+        }
         else return 1;
     })
 
