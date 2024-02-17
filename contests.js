@@ -76,7 +76,12 @@ async function getAllContests(maxtime) {
             if(daydiff > maxtime || daydiff < 0) continue;
             msg += "<b>Platform:</b> " + platnames[plat] + '\n';
             msg += "<b>Date:</b> " + lastdate + '\n';
-            msg += "<b>Time Left:</b> " +  daydiff + " days left\n";
+            if(daydiff > 0) { 
+                msg += "<b>Time Left:</b> " +  daydiff + " days left\n";
+            }
+            else {
+                msg += "<b>Time Left:</b> " + diff_hours(dt, now) + " hours left\n";
+            }
 
             var pair = {"key": daydiff, "value": msg};
             allContests.push(pair);
