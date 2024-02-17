@@ -28,6 +28,9 @@ async function isUserAdmin(ctx, userID, chatID) {
 
     const user = await ctx.api.getChatMember(chatID, userID);
 
+    console.log("CHECKING IF THE USER IS ADMIN: ");
+    console.log(user);
+
     const admin =  user.status == "administrator" || user.status == "creator";
 
     return admin;
