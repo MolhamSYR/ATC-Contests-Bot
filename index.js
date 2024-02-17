@@ -49,8 +49,6 @@ bot.command('start', async (ctx) => {
 });*/
 
 bot.command('setmainchannel', async (ctx) => {
-
-    
     
     var userID = ctx.from.id;
     var chatID = ctx.message.chat.id;
@@ -110,11 +108,13 @@ bot.command('setmainchannel', async (ctx) => {
 
 
 bot.command("contests", async (ctx) => {
+
     var chatID = ctx.message.chat.id;
     var threadID = undefined;
     if(ctx.message.is_topic_message) {
         threadID = ctx.message.message_thread_id;
     }
+
     const msg = ctx.message;
     const txt = msg.text;
     const platform = txt.substring(txt.indexOf(" ") + 1);
