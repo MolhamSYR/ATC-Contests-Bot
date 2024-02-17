@@ -185,8 +185,8 @@ async function getContests(chatid, name, api, threadid, maxtime) {
 
         msg += "<b>Platform:</b> " + name + '\n';
         msg += "<b>Date:</b> " + lastdate + '\n';
-        if(dayDiff > 0) { 
-        msg += "<b>Time Left:</b> " +  daydiff + " days left\n";
+        if(daydiff > 0) { 
+            msg += "<b>Time Left:</b> " +  daydiff + " days left\n";
         }
         else {
             msg += "<b>Time Left:</b> " + diff_hours(dt, now) + " hours left\n";

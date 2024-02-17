@@ -63,7 +63,9 @@ bot.command('setmainchannel', async (ctx) => {
         threadID = ctx.message.message_thread_id;
     }
 
-    if(contests.isUserAdmin(bot, userID, chatID) != true) {
+    const isadmin = contests.isUserAdmin(bot, userID, chatID);
+
+    if() {
         bot.api.sendMessage(chatID, "You aren't allowed to do that!", {
             message_thread_id: threadID
         });
